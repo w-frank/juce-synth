@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT id="BYIQW1" name="synthTest" projectType="audioplug" useAppConfig="1"
+<JUCERPROJECT id="BYIQW1" name="juceSynth" projectType="audioplug" useAppConfig="1"
               addUsingNamespaceToJuceHeader="1" jucerFormatVersion="1" pluginCharacteristicsValue="pluginIsSynth,pluginWantsMidiIn"
               headerPath="../../Source/Maximilian/src/" pluginIsSynth="1" pluginWantsMidiIn="1"
               pluginVSTCategory="kPlugCategSynth">
-  <MAINGROUP id="osgrPK" name="synthTest">
+  <MAINGROUP id="osgrPK" name="juceSynth">
     <GROUP id="{FF2FB86E-6AC3-C1AE-2749-DC7E9DD5C9F9}" name="Source">
       <GROUP id="{138D9AE8-F036-A4CA-ED6C-49CA27FE660D}" name="Maximilian">
         <GROUP id="{6A6847CB-8975-00F7-F5BB-9366B3C166E6}" name="libs">

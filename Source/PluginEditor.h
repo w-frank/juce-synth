@@ -1,12 +1,10 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
+/**
+ * @file PluginEditor.h
+ * 
+ * @brief 
+ * 
+ * @author
+ */
 
 #pragma once
 
@@ -14,9 +12,6 @@
 #include "PluginProcessor.h"
 
 
-//==============================================================================
-/**
-*/
 class JuceSynthFrameworkAudioProcessorEditor  : public AudioProcessorEditor,
                                                 public Slider::Listener
 {
@@ -24,7 +19,7 @@ public:
     JuceSynthFrameworkAudioProcessorEditor (JuceSynthFrameworkAudioProcessor&);
     ~JuceSynthFrameworkAudioProcessorEditor();
 
-    //==============================================================================
+
     void paint (Graphics&) override;
     void resized() override;
     

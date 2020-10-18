@@ -1,18 +1,15 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
+/**
+ * @file PluginProcessor.cpp
+ * 
+ * @brief 
+ * 
+ * @author
+ */
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 
-//==============================================================================
 JuceSynthFrameworkAudioProcessor::JuceSynthFrameworkAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
@@ -41,7 +38,7 @@ JuceSynthFrameworkAudioProcessor::~JuceSynthFrameworkAudioProcessor()
 {
 }
 
-//==============================================================================
+
 const String JuceSynthFrameworkAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -103,7 +100,6 @@ void JuceSynthFrameworkAudioProcessor::changeProgramName (int index, const Strin
 {
 }
 
-//==============================================================================
 void JuceSynthFrameworkAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     ignoreUnused(samplesPerBlock);
@@ -152,7 +148,6 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioSampleBuffer& buffer, 
     
 }
 
-//==============================================================================
 bool JuceSynthFrameworkAudioProcessor::hasEditor() const
 {
     return true; // (change this to false if you choose to not supply an editor)
@@ -163,7 +158,6 @@ AudioProcessorEditor* JuceSynthFrameworkAudioProcessor::createEditor()
     return new JuceSynthFrameworkAudioProcessorEditor (*this);
 }
 
-//==============================================================================
 void JuceSynthFrameworkAudioProcessor::getStateInformation (MemoryBlock& destData)
 {
     // You should use this method to store your parameters in the memory block.
@@ -177,7 +171,6 @@ void JuceSynthFrameworkAudioProcessor::setStateInformation (const void* data, in
     // whose contents will have been created by the getStateInformation() call.
 }
 
-//==============================================================================
 // This creates new instances of the plugin..
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {

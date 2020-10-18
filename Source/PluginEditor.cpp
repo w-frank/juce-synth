@@ -1,18 +1,15 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin editor.
-
-  ==============================================================================
-*/
+/**
+ * @file PluginEditor.cpp
+ * 
+ * @brief 
+ * 
+ * @author
+ */
 
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
 
-//==============================================================================
 JuceSynthFrameworkAudioProcessorEditor::JuceSynthFrameworkAudioProcessorEditor (JuceSynthFrameworkAudioProcessor& p)
     : AudioProcessorEditor (&p), processor (p)
 {
@@ -23,7 +20,6 @@ JuceSynthFrameworkAudioProcessorEditor::~JuceSynthFrameworkAudioProcessorEditor(
 {
 }
 
-//==============================================================================
 void JuceSynthFrameworkAudioProcessorEditor::paint (Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
@@ -42,5 +38,4 @@ void JuceSynthFrameworkAudioProcessorEditor::resized()
 
 void JuceSynthFrameworkAudioProcessorEditor::sliderValueChanged(Slider* slider)
 {
-    
 }

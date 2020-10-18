@@ -1,12 +1,11 @@
-/*
-  ==============================================================================
+/**
+ * @file SynthVoice.h
+ * 
+ * @brief 
+ * 
+ * @author
+ */
 
-    SynthVoice.h
-    Created: 29 Oct 2017 10:18:29am
-    Author:  Joshua Hodge
-
-  ==============================================================================
-*/
 
 #pragma once
 
@@ -23,16 +22,12 @@ public:
         return dynamic_cast <SynthSound*>(sound) != nullptr;
     }
     
-    //=======================================================
-    
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound* sound, int currentPitchWheelPosition) override
     {
         env1.trigger = 1;
         frequency = MidiMessage::getMidiNoteInHertz(midiNoteNumber);
         level = velocity;
     }
-    
-    //=======================================================
     
     void stopNote (float velocity, bool allowTailOff) override
     {
@@ -43,21 +38,15 @@ public:
             clearCurrentNote();
     }
     
-    //=======================================================
-    
     void pitchWheelMoved (int newPitchWheelValue) override
     {
         
     }
     
-    //=======================================================
-    
     void controllerMoved (int controllerNumber, int newControllerValue) override
     {
         
     }
-    
-    //=======================================================
     
     void renderNextBlock (AudioBuffer <float> &outputBuffer, int startSample, int numSamples) override
     {
@@ -78,8 +67,7 @@ public:
             ++startSample;
         }
     }
-    
-    //=======================================================
+
 private:
     double level;
     double frequency;
@@ -87,7 +75,4 @@ private:
     maxiOsc osc1;
     maxiEnv env1;
 
-    
-    
-    
 };
