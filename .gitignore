@@ -1,0 +1,9 @@
+# JUCE
+JuceLibraryCode/
+
+# Build
+build/
+make_helpers/
+
+# Maximilian Library
+/Source/Maximilian
