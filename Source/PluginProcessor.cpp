@@ -19,19 +19,20 @@ JuceSynthFrameworkAudioProcessor::JuceSynthFrameworkAudioProcessor()
                       #endif
                        .withOutput ("Output", AudioChannelSet::stereo(), true)
                      #endif
-                       )
+                       ), valueTree(*this, nullptr, "Parameters", createParameters())
 #endif
 {
+
     mySynth.clearVoices();
-    
+
     for (int i = 0; i < 5; i++)
     {
         mySynth.addVoice(new SynthVoice());
     }
-    
+
     mySynth.clearSounds();
     mySynth.addSound(new SynthSound());
-    
+
 }
 
 JuceSynthFrameworkAudioProcessor::~JuceSynthFrameworkAudioProcessor()
@@ -139,9 +140,16 @@ bool JuceSynthFrameworkAudioProcessor::isBusesLayoutSupported (const BusesLayout
 
 void JuceSynthFrameworkAudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    ScopedNoDenormals noDenormals;
-    //const int totalNumInputChannels  = getTotalNumInputChannels();
-    //const int totalNumOutputChannels = getTotalNumOutputChannels();
+
+    for (int i = 0; i < mySynth.getNumVoices(); i++)
+    {
+        if ((myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i))))
+        {
+            auto attackValue = valueTree.getRawParameterValue("ATTACK");
+            auto releaseValue = valueTree.getRawParameterValue("RELEASE");
+            myVoice->getEnvelope(attackValue->load(), releaseValue->load());
+        }
+    }
 
     buffer.clear();
     mySynth.renderNextBlock(buffer, midiMessages, 0, buffer.getNumSamples());
@@ -175,4 +183,13 @@ void JuceSynthFrameworkAudioProcessor::setStateInformation (const void* data, in
 AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 {
     return new JuceSynthFrameworkAudioProcessor();
+}
+
+AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::createParameters()
+{
+    std::vector<std::unique_ptr<RangedAudioParameter>> params;
+    params.push_back (std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.1f, 5000.0f, 0.1f));
+    params.push_back (std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.1f, 5000.0f, 0.1f));
+
+    return {params.begin(), params.end()};
 }

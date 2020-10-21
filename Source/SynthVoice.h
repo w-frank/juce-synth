@@ -21,6 +21,15 @@ public:
     {
         return dynamic_cast <SynthSound*>(sound) != nullptr;
     }
+
+    void getEnvelope(float attack, float release)
+    {
+        env1.setAttack(double(attack));
+        env1.setDecay(1.0f);
+        env1.setSustain(0.8f);
+        env1.setRelease(double(release));
+
+    }
     
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound* sound, int currentPitchWheelPosition) override
     {
@@ -50,19 +59,16 @@ public:
     
     void renderNextBlock (AudioBuffer <float> &outputBuffer, int startSample, int numSamples) override
     {
-        env1.setAttack(500);
-        env1.setDecay(500);
-        env1.setSustain(0.8);
-        env1.setRelease(2000.0);
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double theWave = osc1.sinewave(frequency);
-            double theSound = env1.adsr(theWave, env1.trigger) * level;
+            double theWave = osc1.sinewave(frequency) * level;
+            double theSound = env1.adsr(theWave, env1.trigger);
             double filteredSound = filter1.lores(theSound, 200, 0.1);
             
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
+                //std::cout<<theWave<<std::endl;
                 outputBuffer.addSample(channel, startSample, filteredSound);
             }
             ++startSample;
