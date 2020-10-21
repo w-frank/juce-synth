@@ -32,6 +32,8 @@ private:
     Slider releaseSlider;
 
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> attackSliderAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> decaySliderAttachment;
+    std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> sustainSliderAttachment;
     std::unique_ptr<AudioProcessorValueTreeState::SliderAttachment> releaseSliderAttachment;
 
     // This reference is provided as a quick way for your editor to

@@ -146,8 +146,13 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioSampleBuffer& buffer, 
         if ((myVoice = dynamic_cast<SynthVoice*>(mySynth.getVoice(i))))
         {
             auto attackValue = valueTree.getRawParameterValue("ATTACK");
+            auto decayValue = valueTree.getRawParameterValue("DECAY");
+            auto sustainValue = valueTree.getRawParameterValue("SUSTAIN");
             auto releaseValue = valueTree.getRawParameterValue("RELEASE");
-            myVoice->getEnvelope(attackValue->load(), releaseValue->load());
+            myVoice->getEnvelope(attackValue->load(),
+                                 decayValue->load(),
+                                 sustainValue->load(),
+                                 releaseValue->load());
         }
     }
 
@@ -189,6 +194,8 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
 {
     std::vector<std::unique_ptr<RangedAudioParameter>> params;
     params.push_back (std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.1f, 5000.0f, 0.1f));
+    params.push_back (std::make_unique<AudioParameterFloat>("DECAY", "Decay", 1.0f, 2000.0f, 1.0f));
+    params.push_back (std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 0.8f));
     params.push_back (std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.1f, 5000.0f, 0.1f));
 
     return {params.begin(), params.end()};

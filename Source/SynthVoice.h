@@ -22,13 +22,12 @@ public:
         return dynamic_cast <SynthSound*>(sound) != nullptr;
     }
 
-    void getEnvelope(float attack, float release)
+    void getEnvelope(float attack, float decay, float sustain, float release)
     {
         env1.setAttack(double(attack));
-        env1.setDecay(1.0f);
-        env1.setSustain(0.8f);
+        env1.setDecay(double(decay));
+        env1.setSustain(double(sustain));
         env1.setRelease(double(release));
-
     }
     
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound* sound, int currentPitchWheelPosition) override
@@ -68,7 +67,6 @@ public:
             
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                //std::cout<<theWave<<std::endl;
                 outputBuffer.addSample(channel, startSample, filteredSound);
             }
             ++startSample;
