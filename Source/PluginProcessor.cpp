@@ -149,10 +149,13 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioSampleBuffer& buffer, 
             auto decayValue = valueTree.getRawParameterValue("DECAY");
             auto sustainValue = valueTree.getRawParameterValue("SUSTAIN");
             auto releaseValue = valueTree.getRawParameterValue("RELEASE");
+            auto waveformValue = valueTree.getRawParameterValue("WAVEFORM");
+
             myVoice->getEnvelope(attackValue->load(),
                                  decayValue->load(),
                                  sustainValue->load(),
                                  releaseValue->load());
+            myVoice->getOscWaveform(waveformValue->load());
         }
     }
 
@@ -193,10 +196,12 @@ AudioProcessor* JUCE_CALLTYPE createPluginFilter()
 AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::createParameters()
 {
     std::vector<std::unique_ptr<RangedAudioParameter>> params;
-    params.push_back (std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.1f, 5000.0f, 0.1f));
-    params.push_back (std::make_unique<AudioParameterFloat>("DECAY", "Decay", 1.0f, 2000.0f, 1.0f));
-    params.push_back (std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 0.8f));
-    params.push_back (std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.1f, 5000.0f, 0.1f));
+
+    params.push_back(std::make_unique<AudioParameterFloat>("ATTACK", "Attack", 0.1f, 5000.0f, 0.1f));
+    params.push_back(std::make_unique<AudioParameterFloat>("DECAY", "Decay", 1.0f, 2000.0f, 1.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 0.8f));
+    params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.1f, 5000.0f, 0.1f));
+    params.push_back(std::make_unique<AudioParameterInt>("WAVEFORM", "Waveform", 0, 2, 0));
 
     return {params.begin(), params.end()};
 }

@@ -29,6 +29,23 @@ public:
         env1.setSustain(double(sustain));
         env1.setRelease(double(release));
     }
+
+    void getOscWaveform(float waveform)
+    {
+        theWave = waveform;
+    }
+
+    double setOscWaveform()
+    {
+        //std::cout<<int(theWave)<<std::endl;
+        switch(int(theWave))
+        {
+            case 0: return osc1.sinewave(frequency);
+            case 1: return osc1.saw(frequency);
+            case 2: return osc1.square(frequency);
+            default: return osc1.sinewave(frequency); 
+        }
+    }
     
     void startNote (int midiNoteNumber, float velocity, SynthesiserSound* sound, int currentPitchWheelPosition) override
     {
@@ -61,13 +78,13 @@ public:
         
         for (int sample = 0; sample < numSamples; ++sample)
         {
-            double theWave = osc1.sinewave(frequency) * level;
-            double theSound = env1.adsr(theWave, env1.trigger);
+
+            double theSound = env1.adsr(setOscWaveform(), env1.trigger) * level;
             double filteredSound = filter1.lores(theSound, 200, 0.1);
             
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                outputBuffer.addSample(channel, startSample, filteredSound);
+                outputBuffer.addSample(channel, startSample, theSound);
             }
             ++startSample;
         }
@@ -76,6 +93,7 @@ public:
 private:
     double level;
     double frequency;
+    int theWave;
     
     maxiOsc osc1;
     maxiEnv env1;

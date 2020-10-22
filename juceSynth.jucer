@@ -6,6 +6,10 @@
               pluginVSTCategory="kPlugCategSynth">
   <MAINGROUP id="osgrPK" name="juceSynth">
     <GROUP id="{FF2FB86E-6AC3-C1AE-2749-DC7E9DD5C9F9}" name="Source">
+      <FILE id="qDLXkm" name="Envelope.cpp" compile="1" resource="0" file="Source/Envelope.cpp"/>
+      <FILE id="fNG2jK" name="Envelope.h" compile="0" resource="0" file="Source/Envelope.h"/>
+      <FILE id="I01A8Z" name="Oscillator.cpp" compile="1" resource="0" file="Source/Oscillator.cpp"/>
+      <FILE id="McPXGg" name="Oscillator.h" compile="0" resource="0" file="Source/Oscillator.h"/>
       <GROUP id="{138D9AE8-F036-A4CA-ED6C-49CA27FE660D}" name="Maximilian">
         <GROUP id="{6A6847CB-8975-00F7-F5BB-9366B3C166E6}" name="libs">
           <FILE id="fjsrLi" name="fft.cpp" compile="1" resource="0" file="Source/Maximilian/src/libs/fft.cpp"/>
