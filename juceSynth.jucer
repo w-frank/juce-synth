@@ -49,6 +49,8 @@
             file="Source/PluginEditor.cpp"/>
       <FILE id="LEAIle" name="PluginEditor.h" compile="1" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
+    <FILE id="gfdPHM" name="Filter.cpp" compile="1" resource="0" file="Source/Filter.cpp"/>
+    <FILE id="kXUryD" name="Filter.h" compile="0" resource="0" file="Source/Filter.h"/>
   </MAINGROUP>
   <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"
                JUCE_PLUGINHOST_VST="1"/>

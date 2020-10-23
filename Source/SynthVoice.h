@@ -22,6 +22,22 @@ public:
         return dynamic_cast <SynthSound*>(sound) != nullptr;
     }
 
+    void getOscWaveform(float waveform)
+    {
+        theWave = int(waveform);
+    }
+
+    double setOscWaveform()
+    {
+        switch(theWave)
+        {
+            case 0: return osc1.sinewave(frequency);
+            case 1: return osc1.saw(frequency);
+            case 2: return osc1.square(frequency);
+            default: return osc1.sinewave(frequency); 
+        }
+    }
+
     void getEnvelope(float attack, float decay, float sustain, float release)
     {
         env1.setAttack(double(attack));
@@ -30,20 +46,26 @@ public:
         env1.setRelease(double(release));
     }
 
-    void getOscWaveform(float waveform)
+    double setEnvelope()
     {
-        theWave = waveform;
+        return env1.adsr(setOscWaveform(), env1.trigger);
     }
 
-    double setOscWaveform()
+    void getFilter(float filterType, float filterCutoff, float filterResonance)
     {
-        //std::cout<<int(theWave)<<std::endl;
-        switch(int(theWave))
+        filterSelection = int(filterType);
+        cutoff = filterCutoff;
+        resonance = filterResonance;
+    }
+
+    double setFilter()
+    {
+        switch(filterSelection)
         {
-            case 0: return osc1.sinewave(frequency);
-            case 1: return osc1.saw(frequency);
-            case 2: return osc1.square(frequency);
-            default: return osc1.sinewave(frequency); 
+            case 0: return filter1.lores(setEnvelope(), cutoff, resonance);
+            case 1: return filter1.hires(setEnvelope(), cutoff, resonance);
+            case 2: return filter1.bandpass(setEnvelope(), cutoff, resonance);
+            default: return filter1.lores(setEnvelope(), cutoff, resonance);
         }
     }
     
@@ -75,16 +97,12 @@ public:
     
     void renderNextBlock (AudioBuffer <float> &outputBuffer, int startSample, int numSamples) override
     {
-        
         for (int sample = 0; sample < numSamples; ++sample)
         {
 
-            double theSound = env1.adsr(setOscWaveform(), env1.trigger) * level;
-            double filteredSound = filter1.lores(theSound, 200, 0.1);
-            
             for (int channel = 0; channel < outputBuffer.getNumChannels(); ++channel)
             {
-                outputBuffer.addSample(channel, startSample, theSound);
+                outputBuffer.addSample(channel, startSample, setFilter() * 0.3f);
             }
             ++startSample;
         }
@@ -94,6 +112,10 @@ private:
     double level;
     double frequency;
     int theWave;
+
+    int filterSelection;
+    double cutoff;
+    double resonance;
     
     maxiOsc osc1;
     maxiEnv env1;

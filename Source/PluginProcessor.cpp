@@ -149,13 +149,21 @@ void JuceSynthFrameworkAudioProcessor::processBlock (AudioSampleBuffer& buffer, 
             auto decayValue = valueTree.getRawParameterValue("DECAY");
             auto sustainValue = valueTree.getRawParameterValue("SUSTAIN");
             auto releaseValue = valueTree.getRawParameterValue("RELEASE");
-            auto waveformValue = valueTree.getRawParameterValue("WAVEFORM");
 
             myVoice->getEnvelope(attackValue->load(),
                                  decayValue->load(),
                                  sustainValue->load(),
                                  releaseValue->load());
+
+            auto waveformValue = valueTree.getRawParameterValue("WAVEFORM");
+
             myVoice->getOscWaveform(waveformValue->load());
+
+            auto filterTypeValue = valueTree.getRawParameterValue("FILTER_TYPE");
+            auto filterCutoffValue = valueTree.getRawParameterValue("FILTER_CUTOFF");
+            auto filterResonanceValue = valueTree.getRawParameterValue("FILTER_RESONANCE");
+
+            myVoice->getFilter(filterTypeValue->load(), filterCutoffValue->load(), filterResonanceValue->load());
         }
     }
 
@@ -202,6 +210,9 @@ AudioProcessorValueTreeState::ParameterLayout JuceSynthFrameworkAudioProcessor::
     params.push_back(std::make_unique<AudioParameterFloat>("SUSTAIN", "Sustain", 0.0f, 1.0f, 0.8f));
     params.push_back(std::make_unique<AudioParameterFloat>("RELEASE", "Release", 0.1f, 5000.0f, 0.1f));
     params.push_back(std::make_unique<AudioParameterInt>("WAVEFORM", "Waveform", 0, 2, 0));
+    params.push_back(std::make_unique<AudioParameterFloat>("FILTER_CUTOFF", "FilterCutoff", 2.0f, 10000.0f, 400.0f));
+    params.push_back(std::make_unique<AudioParameterFloat>("FILTER_RESONANCE", "FilterResonance", 1.0f, 5.0f, 1.0f));
+    params.push_back(std::make_unique<AudioParameterInt>("FILTER_TYPE", "FilterType", 0, 2, 0));
 
     return {params.begin(), params.end()};
 }

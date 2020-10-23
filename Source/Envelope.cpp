@@ -53,15 +53,35 @@ Envelope::~Envelope()
 
 void Envelope::paint (Graphics& g)
 {
+    Rectangle<int> titleArea (0, 10, getWidth(), 20);
+
+    g.fillAll(Colours::black);
+    g.setColour(Colours::white);
+    g.drawText("Envelope", titleArea, Justification::centredTop);
+
+    // TODO: Static positioning for now, make dynamic
+    g.drawText("A", 53, 150, 20, 20, Justification::centredTop);
+    g.drawText("D", 77, 150, 20, 20, Justification::centredTop);
+    g.drawText("S", 103, 150, 20, 20, Justification::centredTop);
+    g.drawText("R", 128, 150, 20, 20, Justification::centredTop);
+
+    Rectangle<float> area (25, 25, 150, 150);
+
+    g.setColour(Colours::yellow);
+    g.drawRoundedRectangle(area, 20.0f, 2.0f);
 }
 
 void Envelope::resized()
 {
 
-    Rectangle<int> area = getLocalBounds().reduced(40);
-    attackSlider.setBounds(10, 10, 40, 100);
-    decaySlider.setBounds(60, 10, 40, 100);
-    sustainSlider.setBounds(110, 10, 40, 100);
-    releaseSlider.setBounds(160, 10, 40, 100);
+    Rectangle<int> area = getLocalBounds().reduced(50);
+
+    int sliderWidth = 25;
+    int sliderHeight = 175;
+
+    attackSlider.setBounds(area.removeFromLeft(sliderWidth).removeFromTop(sliderHeight).withTrimmedTop(10));
+    decaySlider.setBounds(area.removeFromLeft(sliderWidth).removeFromTop(sliderHeight).withTrimmedTop(10));
+    sustainSlider.setBounds(area.removeFromLeft(sliderWidth).removeFromTop(sliderHeight).withTrimmedTop(10));
+    releaseSlider.setBounds(area.removeFromLeft(sliderWidth).removeFromTop(sliderHeight).withTrimmedTop(10));
 
 }
