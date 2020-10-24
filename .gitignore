@@ -6,3 +6,6 @@ build/
 
 # Maximilian Library
 /Source/Maximilian
+
+# Visual Studio Code
+/.vscode
