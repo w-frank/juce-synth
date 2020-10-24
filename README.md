@@ -17,7 +17,7 @@ cd Source
 git clone https://github.com/micknoise/Maximilian.git
 ```
 
-Add `#include <limits>` to maximilian.h
+Add `#include <limits>` to `Maximilian/src/maximilian.h` for std::numeric_limits arithmetic type property queries.
 
 ## Setup VST3 Plugin Build
 
